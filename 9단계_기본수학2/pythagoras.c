@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	int a, b, c;
+	int a, b, c ;
 
 	while(1)
 	{
