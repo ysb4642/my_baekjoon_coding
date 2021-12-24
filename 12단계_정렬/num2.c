@@ -1,40 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Swap(int arr[], int idx1, int idx2)
+void MergeTwoArea(int arr[], int left, int mid, int right)
 {
-	int temp = arr[idx1];
-	arr[idx1] = arr[idx2];
-	arr[idx2] = temp;
-}
+	int fidx = left;
+	int ridx = mid + 1;
+	int i;
 
-int Partition(int arr[], int left, int right)
-{
-	int pivot = arr[left];
-	int low = left + 1;
-	int high = right;
+	int *sortArr = (int *)malloc(sizeof(int) * (right + 1));
+	int sidx = left;
 
-	while (low <= high)
+	while (fidx <= mid && ridx <= right)
 	{
-		while (pivot >= arr[low] && low <= right)
-			low++;
-		while (pivot <= arr[high] && high >= (left + 1))
-			high--;
-		if (low <= high)
-			Swap(arr, low, high);
+		if (arr[fidx] <= arr[ridx])
+			sortArr[sidx] = arr[fidx++];
+		else
+			sortArr[sidx] = arr[ridx++];
+		sidx++;
 	}
-	Swap(arr, left, high);
-	return (high);
+	if (fidx > mid)
+	{
+		for (i = ridx; i <= right; i++, sidx++)
+			sortArr[sidx] = arr[i];
+	}
+	else
+	{
+		for (i = fidx; i <= mid; i++, sidx++)
+			sortArr[sidx] = arr[i];
+	}
+	for (i = left; i <= right; i++)
+		arr[i] = sortArr[i];
+	free(sortArr);
 }
 
-
-void QuickSort(int arr[], int left, int right)
+void MergeSort(int arr[], int left, int right)
 {
-	if (left <= right)
+	int mid;
+
+	if (left < right)
 	{
-		int pivot = Partition(arr, left, right);
-		QuickSort(arr, left, pivot - 1);
-		QuickSort(arr, pivot + 1, right);
+		mid = (left + right) / 2;
+
+		MergeSort(arr, left, mid);
+		MergeSort(arr, mid + 1, right);
+
+		MergeTwoArea(arr, left, mid, right);
 	}
 }
 
@@ -49,7 +59,7 @@ int main(void)
 		return (0);
 	for (i = 0; i < n; i++)
 		scanf("%d", &arr[i]);
-	QuickSort(arr, 0, n - 1);
+	MergeSort(arr, 0, n - 1);
 	for (i = 0; i < n; i++)
 		printf("%d\n", arr[i]);
 	free(arr);
