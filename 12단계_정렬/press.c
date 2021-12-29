@@ -3,65 +3,66 @@
 
 int compare(const void *first, const void *second)
 {
-	int a = *(int *)first;
-	int b = *(int *)second;
+	return (*(int *)first - *(int *)second);
+}
 
-	if (a < b)
-		return (-1);
-	else 
-		return (1);
-	return (0);
+int unique(int *arr, int size)
+{
+	int i, j = 0;
+	for (i = 1; i < size; i++)
+	{
+		if (arr[j] == arr[i])
+			continue ;
+		arr[++j] = arr[i];
+	}
+	return (++j);
+}
+
+int binarysearch(int *arr, int size, int key)
+{
+	int left = 0, right = size - 1, mid;
+	while (left <= right)
+	{
+		mid = (left + right) / 2;
+		if (arr[mid] < key)
+			left = mid + 1;
+		else if (arr[mid] > key)
+			right = mid - 1;
+		else
+			return mid;
+	}
+	return (-1);
 }
 
 int main(void)
 {
-	int n, i, j ,k, cnt, len;
+	int n, i, cnt, tmp;
 	int *arr;
-	int *tep;
+	int *sort;
 
 	scanf("%d", &n);
-	arr = (int *)malloc(sizeof(int) * n);
-	tep = (int *)malloc(sizeof(int) * n);
+
+	arr = (int *)calloc(n ,sizeof(int));
+	sort = (int *)calloc(n, sizeof(int));
+
 	for (i = 0; i < n; i++)
+	{
 		scanf("%d", &arr[i]);
-	cnt = 0;
-	for (i = 0; i < n; i++)
-	{
-		for (j = 0; j < n; j++)
-		{
-			k = 0;
-			if (arr[i] == tep[j])
-			{
-				k++;
-				cnt++;
-				break ;
-			}
-		}
-		if (k == 0)
-			tep[i] = arr[i];
-	
+		sort[i] = arr[i];
 	}
+
+	qsort(sort, n, sizeof(int), compare);
+	
+	cnt = unique(sort, n);
 	for (i = 0; i < n; i++)
-		printf("%d ", tep[i]);
-	printf("\n");
-	len = n - cnt;
-	qsort(tep, len, sizeof(tep[0]), compare);
-	for (i = 0; i < n; i++)
-		printf("%d ", tep[i]);
-	/*for (i = 0; i < n; i++)
 	{
-		for (j = 0; j < n; j++)
-		{
-			if (arr[i] == tep[j])
-			{
-				printf("%d ", j);
-				break ;
-			}
-		}
-	}*/
+		tmp =  binarysearch(sort, cnt, arr[i]);
+		printf("%d ", tmp);
+	}
 	free(arr);
-	free(tep);
+	free(sort);
 	arr = NULL;
-	tep = NULL;
+	sort = NULL;
+
 	return (0);
 }
