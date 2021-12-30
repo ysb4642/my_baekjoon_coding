@@ -1,46 +1,29 @@
 #include <stdio.h>
 
-#define small(a, b) a < b ? a : b
-
-int main(void)
-{
-	int n, m, cntB, cntW, min = 80;
-	int i, j;
-	char chess[50][50];
-
-	scanf("%d %d", &n, &m);
-	for (i = 0; i < n; i++)
-		scanf("%s", &chess[i]);
-	for (i = 0; i < n - 7; i++)
-	{
-		for (j = 0; j < m - 7; j++)
-		{
-			cntB = 0;
-			cntW = 0;
-			for (int a = i; a < i + 8; a++)
-			{
-				for (int b = j; b < j + 8; b++)
-				{
-					if ((a + b) % 2 == 0)
-					{
-						if (chess[a][b] == 'B')
-							cntW++;
-						else
-							cntB++;
-					}
-					else
-					{
-						if (chess[a][b] == 'B')
-							cntB++;
-						else
-							cntW++;
-					}
-				}
-			}
-			min = small(min, cntB);
-			min = small(min, cntW);
-		}
-	}
-	printf("%d\n", min);
-	return (0);
+int main(){
+    int row, col; // 체스판의 가로 세로 길이
+    char array[50][50];
+    int min = 32; // 최소값만 저장하기 위한 변수, 나올 수 있는 제일 높은 변경 횟수가 31이기 때문에 32로 초기 설정
+    
+    scanf("%d %d", &row, &col);
+    
+    for(int i = 0; i < row; i++){
+        scanf("%s", array[i]);
+    }
+    
+    for(int i = 0; i < row - 7; i++){ // 가능한 세로 범위에서
+        for(int j = 0; j < col - 7; j++){ // 가능한 가로 범위에서
+            int count = 0;
+            for(int s_i = i; s_i < i + 8; s_i++){
+                for(int s_j = j; s_j < j + 8; s_j++){
+                    count += (s_i + s_j) % 2 == 1 ^ array[s_i][s_j] == 'B'; // 다시 칠해야할 칸이 있으면 카운트
+                }
+            }
+            count = 64 - count < count ? 64 - count : count; // 32보다 크면 흰색과 검정색 기준을 바꾸면 다시 칠해야할 칸이 더 적아진다.
+            min = count < min ? count : min; // 최소값과 비교해서 현재 카운트가 더 작으면 최소값 교체
+        }
+    }
+    
+    printf("%d\n", min);
+    return 0;
 }
