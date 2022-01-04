@@ -61,7 +61,6 @@ Data SPeek(Stack *pstack)
 	return pstack->stackArr[pstack->topIndex];
 }
 
-
 int main(void)
 {	
 	char str[600000];
@@ -72,19 +71,23 @@ int main(void)
 	StackInit(&save_l);
 	StackInit(&save_r);
 
-	scanf("%s", str);
+	fgets(str, sizeof(str), stdin);
 	for (i = 0; i < strlen(str); i++)
 		SPush(&save_l, str[i]);
 	scanf("%d", &n);
 	while (n--)
 	{
-		scanf("%c", &tmp);
-		if (tmp == 'P')
+		char order[10];
+		fgets(order, sizeof(order), stdin);
+		order[strlen(order) - 1] = '\0';
+
+		//scanf("%c", &tmp);
+		if (!strcmp(order, "P"))
 		{
 			scanf("%c", &ch);
 			SPush(&save_l, ch);
 		}
-		else if (tmp == 'L')
+		else if (!strcmp(order, "L"))
 		{
 			if (SIsEmpty(&save_l))
 				continue ;
@@ -94,14 +97,14 @@ int main(void)
 				SPop(&save_l);
 			}
 		}
-		else if (tmp == 'B')
+		else if (!strcmp(order, "B"))
 		{
 			if (SIsEmpty(&save_l))
 				continue ;
 			else
 				SPop(&save_l);
 		}
-		else if (tmp == 'D')
+		else if (!strcmp(order, "D"))
 		{
 			if (SIsEmpty(&save_r))
 				continue ;
@@ -111,16 +114,16 @@ int main(void)
 				SPop(&save_r);
 			}
 		}
-		while (!SIsEmpty(&save_l))
-		{
-			SPush(&save_r, SPeek(&save_l));
-			SPop(&save_l);
-		}
-		while (!SIsEmpty(&save_r))
-		{
-			printf("%c", SPeek(&save_r));
-			SPop(&save_r);
-		}
-		return (0);
 	}
+	while (!SIsEmpty(&save_l))
+	{
+		SPush(&save_r, SPeek(&save_l));
+		SPop(&save_l);
+	}
+	while (!SIsEmpty(&save_r))
+	{
+		printf("%c", SPeek(&save_r));
+		SPop(&save_r);
+	}
+	return (0);
 }
