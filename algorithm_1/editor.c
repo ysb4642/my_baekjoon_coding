@@ -61,6 +61,7 @@ Data SPeek(Stack *pstack)
 	return pstack->stackArr[pstack->topIndex];
 }
 
+
 int main(void)
 {	
 	char str[600000];
@@ -71,23 +72,19 @@ int main(void)
 	StackInit(&save_l);
 	StackInit(&save_r);
 
-	fgets(str, sizeof(str), stdin);
+	scanf("%s", str);
 	for (i = 0; i < strlen(str); i++)
 		SPush(&save_l, str[i]);
-	scanf("%d", &n);
+	scanf(" %d", &n);
 	while (n--)
 	{
-		char order[10];
-		fgets(order, sizeof(order), stdin);
-		order[strlen(order) - 1] = '\0';
-
-		//scanf("%c", &tmp);
-		if (!strcmp(order, "P"))
+		scanf(" %c", &tmp);
+		if (tmp == 'P')
 		{
-			scanf("%c", &ch);
+			scanf(" %c", &ch);
 			SPush(&save_l, ch);
 		}
-		else if (!strcmp(order, "L"))
+		else if (tmp == 'L')
 		{
 			if (SIsEmpty(&save_l))
 				continue ;
@@ -97,14 +94,14 @@ int main(void)
 				SPop(&save_l);
 			}
 		}
-		else if (!strcmp(order, "B"))
+		else if (tmp == 'B')
 		{
 			if (SIsEmpty(&save_l))
 				continue ;
 			else
 				SPop(&save_l);
 		}
-		else if (!strcmp(order, "D"))
+		else if (tmp == 'D')
 		{
 			if (SIsEmpty(&save_r))
 				continue ;
