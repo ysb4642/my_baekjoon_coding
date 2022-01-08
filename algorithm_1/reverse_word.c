@@ -12,7 +12,7 @@ int main(void)
 		fgets(str, 1001, stdin);
 		for (int j = 0; j < strlen(str) - 1; j++)
 		{
-			if (str[j] != ' ')
+			if (str[j] != ' ') 
 				stack[top++] = str[j];
 			if (str[j] == ' ' || j == strlen(str) - 2)
 			{
