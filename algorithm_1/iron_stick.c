@@ -1,15 +1,19 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #define TRUE	1
 #define FALSE	0
 #define STACK_LEN	100002
 
+typedef char Data;
+
 typedef struct _arrayStack
 {
-	char stackArr[STACK_LEN];
+	Data stackArr[STACK_LEN];
 	int topIndex;
-} Stack;
+} ArrayStack;
+
+typedef ArrayStack Stack;
 
 void StackInit(Stack *pstack)
 {
@@ -24,18 +28,21 @@ int SIsEmpty(Stack *pstack)
 		return FALSE;
 }
 
-void SPush(Stack *pstack, char data)
+void SPush(Stack *pstack, Data data)
 {
 	pstack->topIndex += 1;
 	pstack->stackArr[pstack->topIndex] = data;
 }
 
-char SPop(Stack *pstack)
+Data SPop(Stack *pstack)
 {
 	int rIdx;
 
 	if (SIsEmpty(pstack))
+	{
+		printf("Stack Memory Error!");
 		exit(-1);
+	}
 
 	rIdx = pstack->topIndex;
 	pstack->topIndex -= 1;
@@ -43,55 +50,50 @@ char SPop(Stack *pstack)
 	return pstack->stackArr[rIdx];
 }
 
-char SPeek(Stack *pstack)
+Data SPeek(Stack *pstack)
 {
 	if (SIsEmpty(pstack))
+	{
+		printf("Stack Memory Error!");
 		exit(-1);
+	}
 
 	return pstack->stackArr[pstack->topIndex];
-}
-
-
-void stackprint(Stack *pstack)
-{
-	while (!SIsEmpty(pstack))
-	{
-		printf("%c", SPeek(pstack));
-		SPop(pstack);
-	}
 }
 
 int main(void)
 {
 	char str[100002];
 	Stack stk;
+	int num = 0, stick = 0;
 	int i, len;
 
 	StackInit(&stk);
-
-	fgets(str, 100000, stdin);
-	len = strlen(str) - 1;
+	
+	scanf("%s", str);
+	len = strlen(str);
 	for (i = 0; i < len; i++)
 	{
-		if (str[i] == '<')
+		if (str[i] == '(')
 		{
-			stackprint(&stk);
-			while(1)
-			{
-				printf("%c", str[i]);
-				if (str[i] == '>')
-					break ;
-				i++;
-			}
-		}
-		else if (str[i] == ' ')
-		{
-			stackprint(&stk);
-			printf(" ");
+			SPush(&stk, str[i]);
+			stick++;
 		}
 		else
-			SPush(&stk, str[i]);
+		{
+			if (SPeek(&stk) == '(')
+			{
+				stick--;
+				num += stick;
+				SPush(&stk, str[i]);
+			}
+			else
+			{
+				num++;
+				stick--;
+			}
+		}
 	}
-	stackprint(&stk);
+	printf("%d", num);
 	return (0);
 }
