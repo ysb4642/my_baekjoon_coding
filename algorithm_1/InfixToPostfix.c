@@ -143,7 +143,7 @@ int main(void)
 	char exp[100];
 
 	scanf("%s", exp);
-	convToRPNExp(exp);
+	convToRPNExp(exp)                                                                                                                                                                                                                                                                                                               ;                               
 	printf("%s", exp);
 	return (0);
 }
