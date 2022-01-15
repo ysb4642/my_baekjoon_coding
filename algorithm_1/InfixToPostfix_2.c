@@ -6,7 +6,7 @@
 #define TRUE	1
 #define FALSE	0
 
-typedef float Data;
+typedef double Data;
 
 typedef struct _node
 {
@@ -81,7 +81,7 @@ Data EvalRPNExp(char exp[], int arr[])
 	int expLen = strlen(exp);
 	int i, j = 0;
 	char tok;
-	float op1, op2;
+	double op1, op2;
 
 	StackInit(&stack);
 
@@ -90,7 +90,7 @@ Data EvalRPNExp(char exp[], int arr[])
 		tok = exp[i];
 
 		if (isalpha(tok))
-			SPush(&stack, arr[tok - 'A']);
+			SPush(&stack, (double)arr[tok - 'A']);
 		else
 		{
 			op2 = SPop(&stack);
@@ -119,7 +119,7 @@ Data EvalRPNExp(char exp[], int arr[])
 int main(void)
 {
 	int n, i;
-	float arr[100];
+	int arr[100];
 	char exp[100];
 
 	scanf("%d", &n);
