@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define STACK_LEN	1000002
+#define STACK_LEN	1000010
 #define TRUE	1
 #define FALSE	0
 
