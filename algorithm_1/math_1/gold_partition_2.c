@@ -22,6 +22,7 @@ int main(void)
 				j++;
 			}
 		}
+		i++;
 	}
 	scanf("%d", &t);
 	while(t--)
