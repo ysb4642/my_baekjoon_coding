@@ -16,7 +16,5 @@ public class zoo {
 		}
 		long res = (dp[n][0] + dp[n][1] + dp[n][2]) % MOD;
 		System.out.println(res);
-
 	}
-
 }
