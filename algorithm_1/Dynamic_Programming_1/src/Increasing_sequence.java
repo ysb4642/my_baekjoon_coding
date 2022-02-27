@@ -16,7 +16,7 @@ public class Increasing_sequence {
 		
 		for (int i = 2; i <= n; i++) {
 			dp[i] = arr[i];
-			for (int j = 1; j < i; j++) {
+			for (int j = 1; j < i; j++) { 
 				if (arr[j] < arr[i])
 					dp[i] = Math.max(dp[i], dp[j] + arr[i]);
 			}
