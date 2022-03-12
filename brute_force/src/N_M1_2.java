@@ -20,7 +20,6 @@ public class N_M1_2 {
 		visit = new boolean[n];
 		dfs(n, m, 0);
 		System.out.println(sb);
-		
 	}
 	
 	public static void dfs(int n, int m, int depth) {
