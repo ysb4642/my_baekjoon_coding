@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class next_permutation {
+public class Next_permutation {
 
 	public static int N;
 	public static int[] arr;
