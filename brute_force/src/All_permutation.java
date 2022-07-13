@@ -9,7 +9,6 @@ public class All_permutation {
 	public static int[] res;
 	public static boolean[] isvisited;
 	public static StringBuilder sb = new StringBuilder();
-	
 	public static void main(String[] args) throws IOException{
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
